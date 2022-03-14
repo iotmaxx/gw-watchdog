@@ -1,0 +1,11 @@
+[Unit]
+Description=Python IoTmaxx device watchdog
+Wants=gw-watchdog.timer
+
+[Service]
+Type=oneshot
+# Command to execute when the service is started
+ExecStart=/usr/bin/python3 -m gw_watchdog
+
+[Install]
+WantedBy=multi-user.target
