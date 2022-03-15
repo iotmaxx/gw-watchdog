@@ -33,5 +33,5 @@ def checkModem():
     if len(modemList) == 0:         # no modem available
         print("gw_watchdog: failed to detect modem, re-enumerate USB1")
         reenumerateUSB()
-    else:
-        print('modem ok')
+#    else:
+#        print('modem ok')
