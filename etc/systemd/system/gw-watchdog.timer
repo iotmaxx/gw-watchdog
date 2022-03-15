@@ -2,8 +2,8 @@
 Description=IoTmaxx device watchdog timer
 
 [Timer]
-OnUnitActiveSec=300s
-OnBootSec=300s
+OnUnitActiveSec=60s
+OnBootSec=60s
 
 [Install]
 WantedBy=timers.target
