@@ -29,9 +29,14 @@ def reenumerateUSB(usb=1):
         f.flush()
 
 def checkModem():
-    modemList = json.loads(subprocess.run("mmcli -J -L".split(), stdout=subprocess.PIPE).stdout.decode('utf-8')[:-1])['modem-list']
-    if len(modemList) == 0:         # no modem available
-        print("gw_watchdog: failed to detect modem, re-enumerate USB1")
+    try:
+        modemList = json.loads(subprocess.run("mmcli -J -L".split(), stdout=subprocess.PIPE).stdout.decode('utf-8')[:-1])['modem-list']
+        if len(modemList) == 0:         # no modem available
+            print("gw_watchdog: failed to detect modem, re-enumerate USB1")
+            reenumerateUSB()
+    #    else:
+    #        print('modem ok')
+    except json.decoder.JSONDecodeError:
+        # handler "error: couldn't create manager: Timeout was reached" response
+        print("gw_watchdog: failed to parse mmcli response, re-enumerate USB1")
         reenumerateUSB()
-#    else:
-#        print('modem ok')
