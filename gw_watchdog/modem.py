@@ -34,9 +34,16 @@ def checkModem():
         if len(modemList) == 0:         # no modem available
             print("gw_watchdog: failed to detect modem, re-enumerate USB1")
             reenumerateUSB()
-    #    else:
-    #        print('modem ok')
+        else:
+            atiResponse = subprocess.run(['mmcli','-m',modemList[0],'--command=ATI'], stdout=subprocess.PIPE).stdout.decode('utf-8')
+            if not 'Quectel' in atiResponse:
+                print("gw_watchdog: failed to communicate with modem, re-enumerate USB1")
+                reenumerateUSB()
+#            print(atiResponse)
+#            print(json.dumps(modemInfo,indent=4))
+#            print('modem ok')
     except json.decoder.JSONDecodeError:
         # handler "error: couldn't create manager: Timeout was reached" response
         print("gw_watchdog: failed to parse mmcli response, re-enumerate USB1")
         reenumerateUSB()
+
