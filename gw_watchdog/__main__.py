@@ -16,9 +16,9 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 from gw_watchdog import modem
-import datetime
+from datetime import datetime, timezone
 
 if __name__ == '__main__':
     with open("/data/runtime",'w') as f:
-        f.write(f"Run on: {datetime.datetime.utcnow().replace(microsecond=0).isoformat()+'Z'}")
+        f.write(f"Run on: {datetime.now(timezone.utc).replace(microsecond=0).isoformat()}")
     modem.checkModem()
